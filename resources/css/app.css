@@ -1,0 +1,46 @@
+.dropdown-toggle::after {
+    display: none !important;
+}
+
+.ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable,
+.ck.ck-editor__main>.ck-editor__editable.ck-rounded-corners {
+    min-height: 350px;
+}
+
+.table-body {
+    height: 50vh !important;
+    overflow: scroll !important;
+}
+
+:root {
+    --bs-pagination-border-radius: 0px !important;
+}
+
+
+.main-footer {
+    /* transition: margin-left .3s ease-in-out; */
+    /* margin-left: 250px; */
+    margin-top: 80px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    z-index: 999;
+}
+
+.wrapper,
+body,
+html {
+    min-height: 100%;
+    height: 100vh;
+    overflow: hidden;
+
+}
+
+.wrapper .content-wrapper {
+    min-height: calc(100vh - calc(3.5rem + 1px) - calc(3.5rem + 1px));
+    overflow: auto;
+    /* margin-bottom: 204px; */
+    padding-bottom: 120px;
+    scrollbar-width: thin;
+    scrollbar-color: #a9a9a9 transparent;
+}
