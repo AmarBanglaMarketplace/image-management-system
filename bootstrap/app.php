@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Middleware\VerifyAgentToken;
+use App\Http\Middleware\VerifyCustomerToken;
+use App\Http\Middleware\VerifyDeliveryBoyToken;
+use App\Http\Middleware\VerifyShopAdminToken;
+use App\Http\Middleware\VerifySuperAdminToken;
 use App\Http\Middleware\VerifyToken;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -21,7 +26,11 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->alias([
-            'verify.token' => VerifyToken::class,
+            'verify.superadmin.token' => VerifySuperAdminToken::class,
+            'verify.shopadmin.token' => VerifyShopAdminToken::class,
+            'verify.agent.token' => VerifyAgentToken::class,
+            'verify.deliveryboy.token' => VerifyDeliveryBoyToken::class,
+            'verify.customer.token' => VerifyCustomerToken::class,
             // ✅ Spatie permission middleware
             'role' => RoleMiddleware::class,
             'permission' => PermissionMiddleware::class,

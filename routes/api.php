@@ -1,17 +1,36 @@
 <?php
 
-use App\Http\Controllers\Api\MediaController;
+use App\Http\Controllers\Api\AgentMediaController;
+use App\Http\Controllers\Api\CustomerMediaController;
+use App\Http\Controllers\Api\ShopAdminMediaController;
+use App\Http\Controllers\Api\SuperAdminDirectoryController;
+use App\Http\Controllers\Api\SuperAdminFileController;
+use App\Http\Controllers\Api\SuperAdminMediaController;
 use Illuminate\Support\Facades\Route;
 
-/*Media Management*/
-
-Route::prefix('media')->controller(MediaController::class)->group(function () {
+Route::prefix('super-admin/media')->controller(SuperAdminMediaController::class)->group(function () {
     Route::get('/', 'index');
-    Route::post('/upload', 'upload')->middleware(['verify.token']);
-    Route::post('/file', 'renameFile')->middleware(['verify.token']);
-    Route::delete('/file', 'deleteFile')->middleware(['verify.token']);
-
-    Route::post('/create-folder', 'createFolder')->middleware(['verify.token']);
-    Route::post('/rename-folder', 'renameFolder')->middleware(['verify.token']);
-    Route::delete('/delete-folder', 'deleteFolder')->middleware(['verify.token']);
+    Route::post('/upload', 'upload')->middleware(['verify.superadmin.token']);
+    Route::post('/file', 'renameFile')->middleware(['verify.superadmin.token']);
+    Route::delete('/file', 'deleteFile')->middleware(['verify.superadmin.token']);
+});
+Route::prefix('super-admin/folders')->controller(SuperAdminFileController::class)->group(function () {
+    Route::post('/', 'createFolder')->middleware(['verify.superadmin.token']);
+    Route::put('/{name}', 'renameFolder')->middleware(['verify.superadmin.token']);
+    Route::delete('/{name}', 'deleteFolder')->middleware(['verify.superadmin.token']);
+});
+Route::prefix('shop-admin/media')->controller(ShopAdminMediaController::class)->group(function () {
+    Route::post('/upload', 'upload')->middleware(['verify.shopadmin.token']);
+    Route::post('/file', 'renameFile')->middleware(['verify.shopadmin.token']);
+    Route::delete('/file', 'deleteFile')->middleware(['verify.shopadmin.token']);
+});
+Route::prefix('agent/media')->controller(AgentMediaController::class)->group(function () {
+    Route::post('/upload', 'upload')->middleware(['verify.agent.token']);
+    Route::post('/file', 'renameFile')->middleware(['verify.agent.token']);
+    Route::delete('/file', 'deleteFile')->middleware(['verify.agent.token']);
+});
+Route::prefix('customer/media')->controller(CustomerMediaController::class)->group(function () {
+    Route::post('/upload', 'upload')->middleware(['verify.customer.token']);
+    Route::post('/file', 'renameFile')->middleware(['verify.customer.token']);
+    Route::delete('/file', 'deleteFile')->middleware(['verify.customer.token']);
 });

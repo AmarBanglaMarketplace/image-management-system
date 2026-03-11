@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\Response;
 
-class VerifyToken
+class VerifyAgentToken
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  Closure(Request): (Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
     {
@@ -21,17 +21,8 @@ class VerifyToken
         if (!$token) {
             return response()->json(['error' => 'Token missing'], 401);
         }
-        $role = $request->route()->getPrefix(); // e.g. 'super-admin/media'
-        $url = match ($role) {
-            'super-admin/media' => env('AUTH_SERVER_URL_SUPER_ADMIN'),
-            'shop-admin/media'  => env('AUTH_SERVER_URL_SHOP_ADMIN'),
-            'agent/media'       => env('AUTH_SERVER_URL_AGENT'),
-            'customer/media'    => env('AUTH_SERVER_URL_CUSTOMER'),
-            'delivery/media'    => env('AUTH_SERVER_URL_DELIVERY'),
-            default             => env('AUTH_SERVER_URL') . '/api/admin/validate-token',
-        };
         // Call the Auth Server to validate the token 
-        $response = Http::withToken($token)->post($url);
+        $response = Http::withToken($token)->post(env('AUTH_SERVER_URL_AGENT'));
         if ($response->ok() && $response->json('valid')) {
             // Optionally attach user info from Auth Server response 
             $request->attributes->add(['user_id' => $response->json('user_id')]);
