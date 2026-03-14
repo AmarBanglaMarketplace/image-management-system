@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -15,33 +16,6 @@ use Illuminate\Support\Facades\Storage;
  */
 class DeliveryBoyMediaController extends Controller
 {
-    /**
-     * List all files inside a specified folder.
-     *
-     * This endpoint retrieves the list of files stored in the given folder
-     * on the `public` disk. If no folder is provided, it defaults to the
-     * `uploads` directory. The response contains an array of file paths.
-     *
-     * @group File Management
-     * @authenticated
-     *
-     * @header Authorization Bearer <token>
-     *
-     * @param \Illuminate\Http\Request $request
-     *   - folder: optional|string — The folder path to list files from (defaults to `uploads`).
-     *
-     * @return \Illuminate\Http\JsonResponse
-     *   - files: An array of file paths inside the specified folder.
-     */
-    public function index(Request $request)
-    {
-        $folder = $request->input('folder', 'uploads');
-
-        return response()->json([
-            'files'   => Storage::disk('public')->files($folder),
-        ]);
-    }
-
     /**
      * Upload a file to the `uploads` directory.
      *
@@ -72,35 +46,45 @@ class DeliveryBoyMediaController extends Controller
     public function upload(Request $request)
     {
         $request->validate([
-            'file'   => 'required|file|mimes:jpg,jpeg,png,gif,webp,mp4,mov,avi,mkv,pdf|max:204800',
+            'file'   => 'required|file|mimes:jpg,jpeg,png,gif,webp,pdf|max:10000',
             'folder' => 'nullable|string'
         ]);
 
-        // Always inside uploads 
-        $baseFolder = 'uploads/';
-        // If folder name provided, append it as subfolder 
-        $subFolder = trim($request->input('folder', ''));
-        $folder = $baseFolder . $subFolder;
+        try {
+            // Always inside uploads
+            $baseFolder = 'uploads';
 
-        $originalName = pathinfo($request->file('file')->getClientOriginalName(), PATHINFO_FILENAME);
-        $extension    = $request->file('file')->getClientOriginalExtension();
+            // Clean up folder input: remove leading/trailing slashes
+            $subFolder = trim($request->input('folder', ''), '/');
 
-        $safeName = preg_replace('/\s+/', '-', $originalName);
-        $safeName = preg_replace('/[^A-Za-z0-9_\-]/', '', $safeName);
+            // Build final folder path
+            $folder = $subFolder ? $baseFolder . '/' . $subFolder : $baseFolder;
 
-        $uniqueSuffix = time();
-        $newFileName  = $safeName . '_' . $uniqueSuffix . '.' . $extension;
+            $originalName = pathinfo($request->file('file')->getClientOriginalName(), PATHINFO_FILENAME);
+            $extension    = $request->file('file')->getClientOriginalExtension();
 
-        $path = $request->file('file')->storeAs($folder, $newFileName, 'public');
+            // Sanitize filename
+            $safeName = preg_replace('/\s+/', '-', $originalName);
+            $safeName = preg_replace('/[^A-Za-z0-9_\-]/', '', $safeName);
 
-        return response()->json([
-            'message'       => 'File uploaded successfully',
-            'path'          => $path,
-            'url'           => Storage::url($path),
-            'original_name' => $request->file('file')->getClientOriginalName(),
-            'stored_name'   => $newFileName,
-            'type'          => $extension
-        ]);
+            $uniqueSuffix = time();
+            $newFileName  = $safeName . '_' . $uniqueSuffix . '.' . $extension;
+
+            // Store file
+            $path = $request->file('file')->storeAs($folder, $newFileName, 'public');
+
+            return ApiResponse::success('File uploaded successfully', 200, [
+                'path'          => $path,
+                'url'           => Storage::url($path),
+                'original_name' => $request->file('file')->getClientOriginalName(),
+                'stored_name'   => $newFileName,
+                'type'          => $extension,
+            ]);
+        } catch (\Throwable $th) {
+            return ApiResponse::error('File upload failed', 500, [
+                'exception' => $th->getMessage(),
+            ]);
+        }
     }
     /**
      * Delete a file from the `public` disk.
@@ -124,9 +108,23 @@ class DeliveryBoyMediaController extends Controller
     public function deleteFile(Request $request)
     {
         $request->validate(['path' => 'required|string']);
-        Storage::disk('public')->delete($request->path);
+        $path = $request->input('path');
+        if (!str_contains($path, '/')) {
+            $path = 'uploads/' . $path;
+        }
+        try {
+            if (Storage::disk('public')->exists($path)) {
+                Storage::disk('public')->delete($path);
+                return ApiResponse::success('File deleted', 200);
+            }
 
-        return response()->json(['message' => 'File deleted']);
+            return ApiResponse::error('File not found', 404);
+        } catch (\Throwable $th) {
+            // Catch unexpected errors (permissions, misconfigured disk, etc.)
+            return ApiResponse::error('Error deleting file', 500, [
+                'exception' => $th->getMessage(),
+            ]);
+        }
     }
 
     /**
@@ -164,24 +162,29 @@ class DeliveryBoyMediaController extends Controller
 
         // Always inside uploads
         $folder   = 'uploads';
-        $oldPath  = $folder . '/' . trim($request->old_name);
-        $newPath  = $folder . '/' . trim($request->new_name);
+        $oldPath  = $folder . '/' . trim($request->old_name, '/');
+        $newPath  = $folder . '/' . trim($request->new_name, '/');
 
-        if (! Storage::disk('public')->exists($oldPath)) {
-            return response()->json(['error' => 'File not found'], 404);
+        try {
+            if (! Storage::disk('public')->exists($oldPath)) {
+                return ApiResponse::error('File not found', 404);
+            }
+
+            if (Storage::disk('public')->exists($newPath)) {
+                return ApiResponse::error('A file with the new name already exists', 400);
+            }
+
+            Storage::disk('public')->move($oldPath, $newPath);
+
+            return ApiResponse::success('File renamed', 200, [
+                'old_path' => $oldPath,
+                'new_path' => $newPath,
+                'url'      => Storage::url($newPath),
+            ]);
+        } catch (\Throwable $th) {
+            return ApiResponse::error('Error renaming file', 500, [
+                'exception' => $th->getMessage(),
+            ]);
         }
-
-        if (Storage::disk('public')->exists($newPath)) {
-            return response()->json(['error' => 'A file with the new name already exists'], 400);
-        }
-
-        Storage::disk('public')->move($oldPath, $newPath);
-
-        return response()->json([
-            'message'   => 'File renamed',
-            'old_path'  => $oldPath,
-            'new_path'  => $newPath,
-            'url'       => Storage::url($newPath)
-        ]);
     }
 }

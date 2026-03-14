@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -42,16 +43,36 @@ class SuperAdminFileController extends Controller
             'name' => 'required|string'
         ]);
 
-        // Always inside uploads
-        $folder = 'uploads/' . trim($request->input('name'));
+        try {
+            // Always inside uploads
+            $base = 'uploads';
 
-        if (!Storage::disk('public')->exists($folder)) {
+            // Clean folder name (remove leading/trailing slashes)
+            $folderName = trim($request->input('name'), '/');
+
+            // Final folder path
+            $folder = $base . '/' . $folderName;
+
+            // Check if folder exists
+            if (Storage::disk('public')->exists($folder)) {
+                return ApiResponse::error('Folder already exists', 400, [
+                    'folder' => $folder
+                ]);
+            }
+
+            // Create folder
             Storage::disk('public')->makeDirectory($folder);
-            return response()->json(['message' => 'Folder created', 'folder' => $folder]);
-        }
 
-        return response()->json(['message' => 'Folder already exists', 'folder' => $folder]);
+            return ApiResponse::success('Folder created', 201, [
+                'folder' => $folder
+            ]);
+        } catch (\Throwable $th) {
+            return ApiResponse::error('Error creating folder', 500, [
+                'exception' => $th->getMessage()
+            ]);
+        }
     }
+
     /**
      * Rename an existing folder inside the `uploads` directory.
      *
@@ -83,25 +104,45 @@ class SuperAdminFileController extends Controller
             'new_name' => 'required|string',
         ]);
 
-        $oldFolder = 'uploads/' . trim($request->input('old_name'));
-        $newFolder = 'uploads/' . trim($request->input('new_name'));
+        try {
+            // Always inside uploads
+            $base = 'uploads';
 
-        if (! Storage::disk('public')->exists($oldFolder)) {
-            return response()->json(['error' => 'Source folder not found'], 404);
+            // Normalize folder names (remove leading/trailing slashes)
+            $oldName = trim($request->input('old_name'), '/');
+            $newName = trim($request->input('new_name'), '/');
+
+            $oldFolder = $base . '/' . $oldName;
+            $newFolder = $base . '/' . $newName;
+
+            // Check if old folder exists
+            if (! Storage::disk('public')->exists($oldFolder)) {
+                return ApiResponse::error('Source folder not found', 404, [
+                    'old_folder' => $oldFolder
+                ]);
+            }
+
+            // Check if new folder already exists
+            if (Storage::disk('public')->exists($newFolder)) {
+                return ApiResponse::error('Target folder already exists', 400, [
+                    'new_folder' => $newFolder
+                ]);
+            }
+
+            // Rename folder
+            Storage::disk('public')->move($oldFolder, $newFolder);
+
+            return ApiResponse::success('Folder renamed', 200, [
+                'old' => $oldFolder,
+                'new' => $newFolder,
+            ]);
+        } catch (\Throwable $th) {
+            return ApiResponse::error('Error renaming folder', 500, [
+                'exception' => $th->getMessage(),
+            ]);
         }
-
-        if (Storage::disk('public')->exists($newFolder)) {
-            return response()->json(['error' => 'Target folder already exists'], 400);
-        }
-
-        Storage::disk('public')->move($oldFolder, $newFolder);
-
-        return response()->json([
-            'message' => 'Folder renamed',
-            'old' => $oldFolder,
-            'new' => $newFolder,
-        ]);
     }
+
     /**
      * Delete an existing folder inside the `uploads` directory.
      *
@@ -129,14 +170,33 @@ class SuperAdminFileController extends Controller
             'name' => 'required|string'
         ]);
 
-        // Always inside uploads
-        $folder = 'uploads/' . trim($request->input('name'));
+        try {
+            // Always inside uploads
+            $base = 'uploads';
 
-        if (Storage::disk('public')->exists($folder)) {
+            // Normalize folder name
+            $folderName = trim($request->input('name'), '/');
+            
+            // Final folder path
+            $folder = $base . '/' . $folderName;
+
+            // Check if folder exists
+            if (! Storage::disk('public')->exists($folder)) {
+                return ApiResponse::error('Folder not found', 404, [
+                    'folder' => $folder
+                ]);
+            }
+
+            // Delete folder
             Storage::disk('public')->deleteDirectory($folder);
-            return response()->json(['message' => 'Folder deleted', 'folder' => $folder]);
-        }
 
-        return response()->json(['error' => 'Folder not found', 'folder' => $folder], 404);
+            return ApiResponse::success('Folder deleted', 200, [
+                'folder' => $folder
+            ]);
+        } catch (\Throwable $th) {
+            return ApiResponse::error('Error deleting folder', 500, [
+                'exception' => $th->getMessage()
+            ]);
+        }
     }
 }

@@ -23,9 +23,9 @@ class VerifySuperAdminToken
         }
         // Call the Auth Server to validate the token 
         $response = Http::withToken($token)->post(env('AUTH_SERVER_URL_SUPER_ADMIN'));
-        if ($response->ok() && $response->json('valid')) {
+        if ($response->ok() && $response->json('data.valid')) {
             // Optionally attach user info from Auth Server response 
-            $request->attributes->add(['user_id' => $response->json('user_id')]);
+            $request->attributes->add(['user_id' => $response->json('data.user_id')]);
             return $next($request);
         }
         return response()->json(['error' => 'Invalid token'], 401);

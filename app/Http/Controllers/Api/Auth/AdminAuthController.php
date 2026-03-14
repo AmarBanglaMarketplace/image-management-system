@@ -36,7 +36,7 @@ class AdminAuthController extends Controller
 
         // $admin->tokens()->delete(); --- IGNORE ---
         $token = $admin->createToken('admin-token', ['*'])->plainTextToken;
-        return ApiResponse::success(['admin' => $admin, 'token' => $token], 'Login successful');
+        return ApiResponse::success('Login successful', 200, ['admin' => $admin, 'token' => $token]);
     }
 
     /**
