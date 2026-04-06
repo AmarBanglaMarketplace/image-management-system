@@ -1,0 +1,1130 @@
+{
+  "info": {
+    "_postman_id": "7000fa15-76fb-4c05-9fb1-16d79f5af224",
+    "name": "Amar Bangla Image Management Api",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "26620233",
+    "_collection_link": "https://go.postman.co/collection/26620233-7000fa15-76fb-4c05-9fb1-16d79f5af224?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Super Admin",
+      "item": [
+        {
+          "name": "File",
+          "item": [
+            {
+              "name": "All media",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": []
+                },
+                "url": {
+                  "raw": "{{ims_api_url}}super-admin/media/",
+                  "host": [
+                    "{{ims_api_url}}super-admin"
+                  ],
+                  "path": [
+                    "media",
+                    ""
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Upload File",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "59448750-2463-425f-aaf5-7ea6422ede1f",
+                      "src": "/C:/Users/dnationsoftdm4/Downloads/Rectangle 2648.png"
+                    },
+                    {
+                      "key": "folder",
+                      "value": "projectA",
+                      "type": "text",
+                      "uuid": "e9908546-ea1c-4147-ae38-635798de44c6",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{ims_api_url}}super-admin/media/upload",
+                  "host": [
+                    "{{ims_api_url}}super-admin"
+                  ],
+                  "path": [
+                    "media",
+                    "upload"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete File",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "59448750-2463-425f-aaf5-7ea6422ede1f",
+                      "src": "/E:/ccart-5/assets/img/checkout/mastercard.png",
+                      "disabled": true
+                    },
+                    {
+                      "key": "folder",
+                      "value": "",
+                      "type": "text",
+                      "uuid": "e9908546-ea1c-4147-ae38-635798de44c6",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{ims_api_url}}super-admin/media/file?path=brudcumb-image_1775366822.png",
+                  "host": [
+                    "{{ims_api_url}}super-admin"
+                  ],
+                  "path": [
+                    "media",
+                    "file"
+                  ],
+                  "query": [
+                    {
+                      "key": "path",
+                      "value": "brudcumb-image_1775366822.png"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Rename File",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "59448750-2463-425f-aaf5-7ea6422ede1f",
+                      "src": "/E:/ccart-5/assets/img/checkout/mastercard.png"
+                    },
+                    {
+                      "key": "folder",
+                      "value": "",
+                      "type": "text",
+                      "uuid": "e9908546-ea1c-4147-ae38-635798de44c6",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{ims_api_url}}super-admin/media/file?old_name=Rectangle-2648_1775367388.png&new_name=goj_1773475875.png",
+                  "host": [
+                    "{{ims_api_url}}super-admin"
+                  ],
+                  "path": [
+                    "media",
+                    "file"
+                  ],
+                  "query": [
+                    {
+                      "key": "old_name",
+                      "value": "Rectangle-2648_1775367388.png"
+                    },
+                    {
+                      "key": "new_name",
+                      "value": "goj_1773475875.png"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Folder",
+          "item": [
+            {
+              "name": "Rename Folder",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "59448750-2463-425f-aaf5-7ea6422ede1f",
+                      "src": "/E:/ccart-5/assets/img/checkout/mastercard.png"
+                    },
+                    {
+                      "key": "folder",
+                      "value": "",
+                      "type": "text",
+                      "uuid": "e9908546-ea1c-4147-ae38-635798de44c6",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{ims_api_url}}super-admin/folders/rename?old_name=projectATlpha&new_name=projectAL",
+                  "host": [
+                    "{{ims_api_url}}super-admin"
+                  ],
+                  "path": [
+                    "folders",
+                    "rename"
+                  ],
+                  "query": [
+                    {
+                      "key": "old_name",
+                      "value": "projectATlpha"
+                    },
+                    {
+                      "key": "new_name",
+                      "value": "projectAL"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create Folder",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "59448750-2463-425f-aaf5-7ea6422ede1f",
+                      "src": "/E:/ccart-5/assets/img/checkout/mastercard.png"
+                    },
+                    {
+                      "key": "folder",
+                      "value": "",
+                      "type": "text",
+                      "uuid": "e9908546-ea1c-4147-ae38-635798de44c6",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{ims_api_url}}super-admin/folders?name=projectAT",
+                  "host": [
+                    "{{ims_api_url}}super-admin"
+                  ],
+                  "path": [
+                    "folders"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "projectAT"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Folder",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "59448750-2463-425f-aaf5-7ea6422ede1f",
+                      "src": "/E:/ccart-5/assets/img/checkout/mastercard.png"
+                    },
+                    {
+                      "key": "folder",
+                      "value": "",
+                      "type": "text",
+                      "uuid": "e9908546-ea1c-4147-ae38-635798de44c6",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{ims_api_url}}super-admin/folders/delete?name=projectAL",
+                  "host": [
+                    "{{ims_api_url}}super-admin"
+                  ],
+                  "path": [
+                    "folders",
+                    "delete"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "projectAL"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "3|68giU6z16GLDiDNcOGHKxaotbzU4MOcDsqXrdVr504852386",
+            "type": "string"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Shop Admin",
+      "item": [
+        {
+          "name": "File",
+          "item": [
+            {
+              "name": "Upload File",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "59448750-2463-425f-aaf5-7ea6422ede1f",
+                      "src": "/C:/Users/dnationsoftdm4/Downloads/soj.jpg"
+                    },
+                    {
+                      "key": "folder",
+                      "value": "projectA",
+                      "type": "text",
+                      "uuid": "e9908546-ea1c-4147-ae38-635798de44c6",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{ims_api_url}}shop-admin/media/upload",
+                  "host": [
+                    "{{ims_api_url}}shop-admin"
+                  ],
+                  "path": [
+                    "media",
+                    "upload"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Rename File",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "59448750-2463-425f-aaf5-7ea6422ede1f",
+                      "src": "/E:/ccart-5/assets/img/checkout/mastercard.png"
+                    },
+                    {
+                      "key": "folder",
+                      "value": "",
+                      "type": "text",
+                      "uuid": "e9908546-ea1c-4147-ae38-635798de44c6",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{ims_api_url}}shop-admin/media/file?old_name=soj_1773479547.jpg&new_name=goj_1773475875.jpg",
+                  "host": [
+                    "{{ims_api_url}}shop-admin"
+                  ],
+                  "path": [
+                    "media",
+                    "file"
+                  ],
+                  "query": [
+                    {
+                      "key": "old_name",
+                      "value": "soj_1773479547.jpg"
+                    },
+                    {
+                      "key": "new_name",
+                      "value": "goj_1773475875.jpg"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete File",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "59448750-2463-425f-aaf5-7ea6422ede1f",
+                      "src": "/E:/ccart-5/assets/img/checkout/mastercard.png",
+                      "disabled": true
+                    },
+                    {
+                      "key": "folder",
+                      "value": "",
+                      "type": "text",
+                      "uuid": "e9908546-ea1c-4147-ae38-635798de44c6",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{ims_api_url}}shop-admin/media/file?path=goj_1773475875.jpg",
+                  "host": [
+                    "{{ims_api_url}}shop-admin"
+                  ],
+                  "path": [
+                    "media",
+                    "file"
+                  ],
+                  "query": [
+                    {
+                      "key": "path",
+                      "value": "goj_1773475875.jpg"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "3|Giy5ewMv5VlRi7tbavjoh8R3yEVak8yaJhLkm5dN016cf208",
+            "type": "string"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Agent",
+      "item": [
+        {
+          "name": "File",
+          "item": [
+            {
+              "name": "Upload File",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "59448750-2463-425f-aaf5-7ea6422ede1f",
+                      "src": "/C:/Users/dnationsoftdm4/Downloads/8a8664e8c947c70244a72b5d7becf2bb43930d37.jpg"
+                    },
+                    {
+                      "key": "folder",
+                      "value": "projectA",
+                      "type": "text",
+                      "uuid": "e9908546-ea1c-4147-ae38-635798de44c6",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{ims_api_url}}agent/media/upload",
+                  "host": [
+                    "{{ims_api_url}}agent"
+                  ],
+                  "path": [
+                    "media",
+                    "upload"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete File",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "59448750-2463-425f-aaf5-7ea6422ede1f",
+                      "src": "/E:/ccart-5/assets/img/checkout/mastercard.png",
+                      "disabled": true
+                    },
+                    {
+                      "key": "folder",
+                      "value": "",
+                      "type": "text",
+                      "uuid": "e9908546-ea1c-4147-ae38-635798de44c6",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{ims_api_url}}agent/media/file?path=8a8664e8c947c70244a72b5d7becf2bb43930d37_1775453344.jpg",
+                  "host": [
+                    "{{ims_api_url}}agent"
+                  ],
+                  "path": [
+                    "media",
+                    "file"
+                  ],
+                  "query": [
+                    {
+                      "key": "path",
+                      "value": "8a8664e8c947c70244a72b5d7becf2bb43930d37_1775453344.jpg"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Rename File",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "59448750-2463-425f-aaf5-7ea6422ede1f",
+                      "src": "/E:/ccart-5/assets/img/checkout/mastercard.png"
+                    },
+                    {
+                      "key": "folder",
+                      "value": "",
+                      "type": "text",
+                      "uuid": "e9908546-ea1c-4147-ae38-635798de44c6",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{ims_api_url}}agent/media/file?old_name=8a8664e8c947c70244a72b5d7becf2bb43930d37_1775453586.jpg&new_name=cvxvcvxcvxcvxc123.jpg",
+                  "host": [
+                    "{{ims_api_url}}agent"
+                  ],
+                  "path": [
+                    "media",
+                    "file"
+                  ],
+                  "query": [
+                    {
+                      "key": "old_name",
+                      "value": "8a8664e8c947c70244a72b5d7becf2bb43930d37_1775453586.jpg"
+                    },
+                    {
+                      "key": "new_name",
+                      "value": "cvxvcvxcvxcvxc123.jpg"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "2|cv4aC9dR74L2y8lnmq3ShGV5RTSIkiit6UuSUo3m7af21bb8",
+            "type": "string"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Delivery Boy",
+      "item": [
+        {
+          "name": "File",
+          "item": [
+            {
+              "name": "Upload File",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "59448750-2463-425f-aaf5-7ea6422ede1f",
+                      "src": "/C:/Users/dnationsoftdm4/Downloads/soj.jpg"
+                    },
+                    {
+                      "key": "folder",
+                      "value": "projectA",
+                      "type": "text",
+                      "uuid": "e9908546-ea1c-4147-ae38-635798de44c6",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{ims_api_url}}delivery-boy/media/upload",
+                  "host": [
+                    "{{ims_api_url}}delivery-boy"
+                  ],
+                  "path": [
+                    "media",
+                    "upload"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Rename File",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "59448750-2463-425f-aaf5-7ea6422ede1f",
+                      "src": "/E:/ccart-5/assets/img/checkout/mastercard.png"
+                    },
+                    {
+                      "key": "folder",
+                      "value": "",
+                      "type": "text",
+                      "uuid": "e9908546-ea1c-4147-ae38-635798de44c6",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{ims_api_url}}delivery-boy/media/file?old_name=soj_1773479050.jpg&new_name=goj_1773475875xczxcc.jpg",
+                  "host": [
+                    "{{ims_api_url}}delivery-boy"
+                  ],
+                  "path": [
+                    "media",
+                    "file"
+                  ],
+                  "query": [
+                    {
+                      "key": "old_name",
+                      "value": "soj_1773479050.jpg"
+                    },
+                    {
+                      "key": "new_name",
+                      "value": "goj_1773475875xczxcc.jpg"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete File",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "59448750-2463-425f-aaf5-7ea6422ede1f",
+                      "src": "/E:/ccart-5/assets/img/checkout/mastercard.png",
+                      "disabled": true
+                    },
+                    {
+                      "key": "folder",
+                      "value": "",
+                      "type": "text",
+                      "uuid": "e9908546-ea1c-4147-ae38-635798de44c6",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{ims_api_url}}delivery-boy/media/file?path=goj_1773475875xczxcc.jpg",
+                  "host": [
+                    "{{ims_api_url}}delivery-boy"
+                  ],
+                  "path": [
+                    "media",
+                    "file"
+                  ],
+                  "query": [
+                    {
+                      "key": "path",
+                      "value": "goj_1773475875xczxcc.jpg"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "5|Vt52TtL8ooZIvcL4NzeGkz781vCBtJtCQa10xNrxaaa97c22",
+            "type": "string"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Customer",
+      "item": [
+        {
+          "name": "File",
+          "item": [
+            {
+              "name": "Upload File",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "59448750-2463-425f-aaf5-7ea6422ede1f",
+                      "src": [
+                        "/C:/Users/dnationsoftdm4/Downloads/soj.jpg",
+                        "/C:/Users/dnationsoftdm4/Downloads/soj.jpg"
+                      ]
+                    },
+                    {
+                      "key": "folder",
+                      "value": "projectA",
+                      "type": "text",
+                      "uuid": "e9908546-ea1c-4147-ae38-635798de44c6",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{ims_api_url}}customer/media/upload",
+                  "host": [
+                    "{{ims_api_url}}customer"
+                  ],
+                  "path": [
+                    "media",
+                    "upload"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Rename File",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "59448750-2463-425f-aaf5-7ea6422ede1f",
+                      "src": "/E:/ccart-5/assets/img/checkout/mastercard.png"
+                    },
+                    {
+                      "key": "folder",
+                      "value": "",
+                      "type": "text",
+                      "uuid": "e9908546-ea1c-4147-ae38-635798de44c6",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{ims_api_url}}customer/media/file?old_name=soj_1773478732.jpg&new_name=goooj_1773475875.jpg",
+                  "host": [
+                    "{{ims_api_url}}customer"
+                  ],
+                  "path": [
+                    "media",
+                    "file"
+                  ],
+                  "query": [
+                    {
+                      "key": "old_name",
+                      "value": "soj_1773478732.jpg"
+                    },
+                    {
+                      "key": "new_name",
+                      "value": "goooj_1773475875.jpg"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete File",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "59448750-2463-425f-aaf5-7ea6422ede1f",
+                      "src": "/E:/ccart-5/assets/img/checkout/mastercard.png",
+                      "disabled": true
+                    },
+                    {
+                      "key": "folder",
+                      "value": "",
+                      "type": "text",
+                      "uuid": "e9908546-ea1c-4147-ae38-635798de44c6",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{ims_api_url}}customer/media/file?path=goooj_1773475875.jpg",
+                  "host": [
+                    "{{ims_api_url}}customer"
+                  ],
+                  "path": [
+                    "media",
+                    "file"
+                  ],
+                  "query": [
+                    {
+                      "key": "path",
+                      "value": "goooj_1773475875.jpg"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "6|ZpRVD6wyTYabPXeJ72PSRprxG8Znvf4hkQuTC6rd035a3221",
+            "type": "string"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "2|cv4aC9dR74L2y8lnmq3ShGV5RTSIkiit6UuSUo3m7af21bb8",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}
