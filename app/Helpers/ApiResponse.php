@@ -17,7 +17,7 @@ class ApiResponse
      * @param int $code      HTTP status code (default: 200)
      * @return \Illuminate\Http\JsonResponse
      */
-    public static function success($data = [], $message = 'Success', $code = 200)
+    public static function success($message = 'Success', $code = 200, $data = [])
     {
         return response()->json([
             'success' => true,

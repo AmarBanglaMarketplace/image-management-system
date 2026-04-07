@@ -14,7 +14,7 @@ class VerifyCustomerToken
      *
      * @param  Closure(Request): (Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next, $permission = ''): Response
     {
         // Extract token from Authorization header 
         $token = $request->bearerToken();
@@ -23,9 +23,15 @@ class VerifyCustomerToken
         }
         // Call the Auth Server to validate the token 
         $response = Http::withToken($token)->post(env('AUTH_SERVER_URL_CUSTOMER'));
-        if ($response->ok() && $response->json('valid')) {
+        if ($response->ok() && $response->json('data.valid')) {
+            if ($permission) {
+                $permissions = collect($response->json('data.permissions'));
+                if (!$permissions->contains($permission)) {
+                    return response()->json(['error' => 'Forbidden'], 403);
+                }
+            }
             // Optionally attach user info from Auth Server response 
-            $request->attributes->add(['user_id' => $response->json('user_id')]);
+            $request->attributes->add(['user_id' => $response->json('data.user_id')]);
             return $next($request);
         }
         return response()->json(['error' => 'Invalid token'], 401);

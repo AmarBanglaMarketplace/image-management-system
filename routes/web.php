@@ -29,7 +29,6 @@ Route::get('/clear', function () {
 Route::controller(FrontendController::class)->group(function () {
     Route::get('/image/{width}/{height}/{format}/{path}', function ($width, $height, $format, $path) {
         $fullPath = 'storage/uploads/' . $path;
-        // dd($fullPath);
         $url = ImageService::resizeAndCache($fullPath, (int) $width, (int) $height, $format);
 
         // Convert URL back to actual file path
@@ -44,7 +43,6 @@ Route::controller(FrontendController::class)->group(function () {
     
     Route::get('/imagec/{width}/{height}/{format}/{path}', function ($width, $height, $format, $path) {
         $fullPath = 'storage/uploads/' . $path;
-        // dd($fullPath);
         $url = ImageService::cropAndCache($fullPath, (int) $width, (int) $height, $format);
 
         // Convert URL back to actual file path
